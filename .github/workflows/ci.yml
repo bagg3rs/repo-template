@@ -20,13 +20,26 @@ jobs:
   auto-merge:
     needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    # Fork PRs get a read-only GITHUB_TOKEN that `permissions:` cannot elevate,
+    # so they can never self-merge. Skipping them keeps the failure below
+    # meaningful: if we reach the merge step, we genuinely should be able to merge.
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v7
+      # No checkout needed: `gh pr merge --repo` works entirely over the API.
       - name: Merge PR
-        run: gh pr merge ${{ github.event.pull_request.number }} --squash --delete-branch || true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if ! gh pr merge "$PR" --repo "$REPO" --squash --delete-branch; then
+            echo "::error title=Auto-merge failed::Tests passed but PR #${PR} could not be merged. Merge it by hand and check the log above."
+            exit 1
+          fi
+          echo "Merged PR #${PR}."
