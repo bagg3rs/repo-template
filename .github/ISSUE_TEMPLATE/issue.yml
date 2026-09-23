@@ -1,0 +1,83 @@
+name: Issue
+description: Anything that needs doing - a feature, a bug, a chore. One form on purpose.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One form for humans and agents. Two would drift: the human one gets
+        maintained and the other rots, or an agent picks the wrong one and
+        nobody notices.
+
+        The required fields below are the ones a spec file in the repo would
+        have carried. They live here instead because an issue has a close
+        state and a spec file does not.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - feature
+        - bug
+        - chore
+        - decision
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What
+      description: One paragraph. For a bug, what happens and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this is being asked for
+      description: >-
+        What problem it solves, or what breaks if nobody does it. If it feels
+        obvious, write the sentence anyway - the sentence is the part that
+        survives, and it stops being obvious about three weeks from now.
+    validations:
+      required: true
+
+  - type: textarea
+    id: done
+    attributes:
+      label: What done means
+      description: >-
+        How anyone can tell this is finished, without asking you. Checkable
+        beats aspirational: "the export button downloads a CSV with a header
+        row", not "export works properly".
+      placeholder: |
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: What is out of scope
+      description: >-
+        What this deliberately does not cover, so the work stops in the right
+        place. "Nothing, it is small" is a valid answer - write it rather than
+        leaving the field blank.
+    validations:
+      required: true
+
+  - type: textarea
+    id: decisions
+    attributes:
+      label: Decided, deferred, or rejected
+      description: >-
+        Optional at open time and usually filled in by comments as the work
+        goes. Not required, because most of it cannot honestly be written yet:
+        the alternatives get rejected while you are in it, not before you
+        start. That is the whole reason this belongs on an issue thread rather
+        than in a document written up front - a document records the
+        conclusion and loses the argument.
+    validations:
+      required: false

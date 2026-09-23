@@ -10,11 +10,16 @@ Keep this file small: see the steering budget below for why.
 ## Work ties to an issue
 
 - Find the existing issue or open one before starting
+- **Open it with the form**, not a blank issue: `.github/ISSUE_TEMPLATE/issue.yml`
+  requires a why, a done-means and an out-of-scope. Blank issues are disabled,
+  so the form is the only route and the fields are genuinely required. Fill them
+  from what you actually know and say "not known yet" where you do not
 - Reference it in the commit (`Refs #12`, or a bare `#12`) so the trail survives
   in the code as well as on the board. CI gates this on every PR
 - On finish, comment the outcome (what shipped, the commit) then close it. The
   closed issue is the record: it keeps the reasoning and, more valuable later,
-  the alternatives that were rejected
+  the alternatives that were rejected. Put those in a comment as you reject
+  them, in the form's last field - waiting until the end loses them
 - **Keep a closing keyword away from a number unless you mean it to close.**
   `Fixes #12` / `Closes #12` is live wherever GitHub reads it - commit subject,
   PR title, PR body - and the parser has no tense. A sentence describing history

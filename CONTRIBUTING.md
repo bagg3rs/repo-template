@@ -21,12 +21,19 @@ Use [Gitmoji](https://gitmoji.dev/) prefixes:
 
 ## Workflow
 
-1. Create an issue
+1. Create an issue **using the form** (blank issues are off)
 2. Branch or work on main (small fixes commit direct)
 3. **Cite the issue in the commit** - `✨ Add export button (#12)` or `Refs #12`
 4. PR → CI runs → auto-merge on pass
 5. Issues auto-added to project board
 6. On finish, comment the outcome on the issue and close it
+
+Step 1 is one form for humans and agents, not two. Two drift: the human one gets
+maintained and the other rots. It requires a why, a done-means and an
+out-of-scope, and those are required rather than suggested - a missing why is a
+validation error instead of a habit. The rejected-alternatives field is
+deliberately optional, because most of it cannot honestly be written before the
+work starts; it fills up in comments as you go.
 
 Step 3 is gated: the `commits` job fails a PR where a non-merge commit cites no
 issue. Dependency bumps (`📦`, `chore(deps)`) are skipped, and a line **starting
