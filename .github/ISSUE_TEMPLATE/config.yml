@@ -1,0 +1,9 @@
+# Blank issues are off so the form's required fields are actually required.
+# That is the enforcement: a missing "why" becomes a validation error instead of
+# a habit. If it gets in your way in a fork, flip this to true - it is one line,
+# and knowing you turned it off is better than never having had it.
+blank_issues_enabled: false
+
+# No contact_links: they need absolute URLs, which cannot be written portably in
+# a template. The agent-facing pointer lives in .kiro/steering/workflow.md
+# instead, which is the side that gets read on every turn anyway.
