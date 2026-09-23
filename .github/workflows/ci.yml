@@ -6,6 +6,23 @@ on:
     branches: [main]
 
 jobs:
+  # Every commit cites its issue. A gate rather than a line in CONTRIBUTING
+  # because the convention decays without one - measured elsewhere, 78% to 64%
+  # over a quarter. It matters here specifically because auto-merge below means
+  # nothing human reads these messages before they are permanent.
+  # PR-only: on a push to main the range is empty by definition, so the gate
+  # belongs where the messages are still amendable.
+  commits:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      # fetch-depth 0: the gate walks base..HEAD, and a shallow checkout makes
+      # the base ref unresolvable rather than the range merely empty.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - run: ./scripts/check-issue-refs.sh "origin/${{ github.base_ref }}"
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +35,7 @@ jobs:
       - run: npm test
 
   auto-merge:
-    needs: test
+    needs: [test, commits]
     runs-on: ubuntu-latest
     # Fork PRs get a read-only GITHUB_TOKEN that `permissions:` cannot elevate,
     # so they can never self-merge. Skipping them keeps the failure below
